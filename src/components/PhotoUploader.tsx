@@ -41,31 +41,33 @@ export default function PhotoUploader({ label, name, onPhotoCapture }: PhotoUplo
           </div>
         </div>
       ) : (
-        <div 
-          style={{ 
-            border: '2px dashed var(--border)', 
-            borderRadius: 'var(--radius-md)', 
-            padding: '2rem 1rem', 
-            textAlign: 'center',
-            cursor: 'pointer',
-            backgroundColor: 'var(--background)'
-          }}
-          onClick={() => fileInputRef.current?.click()}
-        >
-           <span style={{ color: 'var(--primary)', fontWeight: 600 }}>Tap to Capture Photo</span>
-        </div>
+        <label className="photo-dropzone" style={{ cursor: 'pointer' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+            <circle cx="12" cy="13" r="3"/>
+          </svg>
+          <span>Tap to Capture or Select Photo</span>
+          <input 
+            type="file" 
+            accept="image/*" 
+            name={name}
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ 
+              position: 'absolute',
+              width: '1px',
+              height: '1px',
+              padding: '0',
+              margin: '-1px',
+              overflow: 'hidden',
+              clip: 'rect(0, 0, 0, 0)',
+              whiteSpace: 'nowrap',
+              borderWidth: '0',
+              opacity: 0
+            }}
+          />
+        </label>
       )}
-
-      {/* Actual file input hidden from view */}
-      <input 
-        type="file" 
-        accept="image/*" 
-        capture="environment" 
-        name={name}
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
     </div>
   );
 }

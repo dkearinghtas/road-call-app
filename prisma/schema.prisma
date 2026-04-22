@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Ticket {
+  workorderNumber String @id
+  ticketNumber    String?
+  status          String @default("PENDING") // PENDING, COMPLETED
+  
+  // Dispatch Info
+  dispatcher      String?
+  customer        String?
+  nationalAccount String?
+  nationalAccountType String?
+  callTime        String?
+  truckOrTrailer  String?
+  unitNumber      String?
+  tirePosition    String?
+  tireSize        String?
+  replacementModel String?
+  location        String?
+  dispatchPhone   String?
+  driverName      String?
+  driverNumber    String?
+  rimDamage       String?
+  mudFlapDamage   String?
+  dispatchComments String?
+
+  // Technician Info
+  causeOfFailure  String?
+  scrapTire       String?
+  remaining32nds  String?
+  removeInstallVehicleQty String?
+  dismountMountTireQty String?
+  aluminumValveQty String?
+  brassValveQty    String?
+  flowThroughCapQty String?
+  additionalItems String?
+  rollTime        String?
+  signatureDataUrl String?
+  comments        String?
+
+  images          TicketImage[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model TicketImage {
+  id              String @id @default(uuid())
+  workorderNumber String
+  ticket          Ticket @relation(fields: [workorderNumber], references: [workorderNumber])
+  type            String
+  localPath       String
+  createdAt       DateTime @default(now())
+}
